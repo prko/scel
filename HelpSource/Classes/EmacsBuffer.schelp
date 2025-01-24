@@ -1,43 +1,52 @@
-CLASS:: EmacsBuffer
+title:: EmacsBuffer
 summary:: Lightweight Emacs User Interface
 categories:: Frontends
 
-CLASSMETHODS::
 
-METHOD:: new
-Create a new Emacs buffer with the specified name.
+classmethods::
+
+
+method::new
+
+creates a new Emacs buffer with the specified name.
 If a buffer with the same name already exists, it is cleared.
 
-ARGUMENT:: name
-The name of the new buffer.
+argument::name
+the name of the new buffer.
 Convention has it that generated buffers (those which do not belong
 to a file) should start and end with an asterisk *.
 
-METHOD:: at
-Retrieve an instance by its name.
 
-ARGUMENT:: name
-The name of the buffer.
+method::at
 
-INSTANCEMETHODS::
+retrieves an instance by its name.
 
-METHOD:: front
-Switch to this buffer in Emacs, making it the current buffer.
+argument::name
+the name of the buffer.
 
-CODE::
+
+instancemethods::
+
+
+method::front
+
+switches to this buffer in Emacs, making it the current buffer.
+
+code::
 p = EmacsBuffer.new;
 p.front;
 ::
 
-METHOD:: defineKey
 
-ARGUMENT:: keySeq
-A key sequence.
+method::defineKey
 
-ARGUMENT:: func
-A function to call when that key sequence is invoked.
+argument::keySeq
+a key sequence.
 
-CODE::
+argument::func
+a function to call when that key sequence is invoked.
+
+code::
 // create a key action for the buffer:
 p.defineKey( "hello", { "hey there".postln; } );
 
@@ -50,55 +59,67 @@ p.defineKey( "hey there", { "hello".postln; } );
 p.front;
 ::
 
-METHOD:: insert
-Insert text.
 
-ARGUMENT:: string
-The text which should be inserted.
+method::insert
 
-CODE::
+inserts text.
+
+argument::string
+the text which should be inserted.
+
+code::
 // put some text in the buffer:
 
 p.insert( "this is a really interesting text to read in the buffer" );
 p.front;
 ::
 
-METHOD:: newline
-Insert a newline.
 
-CODE::
+method::newline
+
+inserts a newline.
+
+code::
 p.newline;
 p.front;
 ::
 
-METHOD:: gotoBob
-Move the cursor (point in Emacs jargon) to the beginning of the buffer.
 
-METHOD:: gotoEob
-Move point to the end of the buffer.
+method::gotoBob
 
-METHOD:: goto
-Move point to a specific character position.
+moves the cursor (point in Emacs jargon) to the beginning of the buffer.
 
-ARGUMENT:: position
-An integer.
 
-METHOD:: button
-Create a multistate button.
+method::gotoEob
 
-ARGUMENT:: states
-An array of state names.
+moves point to the end of the buffer.
 
-ARGUMENT:: action
-A function to call when the button state changes.
 
-ARGUMENT:: prefix
-Text to insert before the current state.
+method::goto
 
-ARGUMENT:: suffix
-Text to insert after the current state.
+moves point to a specific character position.
 
-CODE::
+argument::position
+an integer.
+
+
+method::button
+
+creates a multistate button.
+
+argument::states
+an array of state names.
+
+argument::action
+a function to call when the button state changes.
+
+argument::prefix
+text to insert before the current state.
+
+argument::suffix
+text to insert after the current state.
+
+code::
 // make a button:
 
 p.button( [ "on", "off", "in between" ], { |v| v.postln; } );
@@ -109,32 +130,38 @@ p.button( [ "on", "off", "in between" ], { |v| v.postln; }, "******", "+++++" );
 p.front;
 ::
 
-METHOD:: closeButton
-Create a button which will close this buffer.
 
-CODE::
+method::closeButton
+
+creates a button which will close this buffer.
+
+code::
 p.closeButton;
 p.front;
 ::
 
-METHOD:: editableField
-Create a field which can be edited inline.
 
-ARGUMENT:: tag
-The label of the field.
+method::editableField
 
-ARGUMENT:: value
-The default content, a string.
+creates a field which can be edited inline.
 
-ARGUMENT:: action
-A function to call when the user submits the content by pressing enter.
+argument::tag
+the label of the field.
 
-CODE::
+argument::value
+the default content, a string.
+
+argument::action
+a function to call when the user submits the content by pressing enter.
+
+code::
 p = EmacsBuffer.new;
 p.editableField( "write something here", "like this?", { |v| v.postln; } );
 p.front;
 ::
 
-METHOD:: free
-Close this buffer.
+
+method::free
+
+closes this buffer.
 
